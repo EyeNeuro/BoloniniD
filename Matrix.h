@@ -11,7 +11,7 @@ class Matrix {
         size_t row, col;
 
     public:
-        Matrix(vector<T> d, int _n, int _m) {
+        Matrix(vector<T> d, int _n, int _m) { //creates a matrix with size (n, m)
             row = _n;
             col = _m;
             if (row * col == d.size()) {
@@ -22,20 +22,20 @@ class Matrix {
             }
         }
 
-        pair<size_t, size_t> size() const {
+        pair<size_t, size_t> size() const { //returns a pair (rows, cols)
             return make_pair(row, col);
         }
 
-        T elem(int i, int j) const {
+        T elem(int i, int j) const { //return (i, j) element of martrix
             auto r = col * i + j;
             return mas[r];
         }
-        T& elem(int i, int j) {
+        T& elem(int i, int j) { // return (i, j) element of martrix
             auto r = col * i + j;
             return mas[r];
         }
 
-        Matrix<T>& operator += (const Matrix<T>& other) {
+        Matrix<T>& operator += (const Matrix<T>& other) { //sums matrices
             auto a = other.size();
             if ((*this).size() == a) {
                 for (size_t i = 0; i < a.first; ++i) {
@@ -50,7 +50,7 @@ class Matrix {
             }
         }
 
-        Matrix<T>& operator *= (const T t) {
+        Matrix<T>& operator *= (const T t) { //multiplies a matrix and a constant
             for (size_t i = 0; i < row; ++i) {
                 for (size_t j = 0; j < col; ++j) {
                     mas[i * col + j] *= t;
@@ -59,7 +59,7 @@ class Matrix {
             return *this;
         }
 
-        Matrix<T>& transpose() {
+        Matrix<T>& transpose() { //transposes a matrix
             vector<T> g;
             for (size_t j = 0; j < col; ++j) {
                 for (size_t i = 0; i < row; ++i) {
@@ -80,7 +80,7 @@ class Matrix {
             mas = g;
         }
 
-        Matrix<T> transposed() const {
+        Matrix<T> transposed() const { //returns a transposed matrix
             Matrix chn = *this;
             vector<T> g;
             for (size_t j = 0; j < col; ++j) {
@@ -96,7 +96,7 @@ class Matrix {
             return mas[g];
         }
 
-        Matrix<T>& operator *= (const Matrix& other) {
+        Matrix<T>& operator *= (const Matrix& other) { //multiplies matrices
             if (col == other.size().first) {
                 Matrix<T> y = *this;
                 auto pa = other.size();
@@ -118,13 +118,13 @@ class Matrix {
             }
         }
 
-        Matrix<T> operator * (const Matrix& other) const {
+        Matrix<T> operator * (const Matrix& other) const { //multiplies matrices
             Matrix<T> y = *this;
             y *= other;
             return y;
         }
 
-        typedef typename vector<T>::iterator Iter;
+        typedef typename vector<T>::iterator Iter; //matrix iterator
         Iter begin() {
             return mas.begin();
         }
@@ -132,7 +132,7 @@ class Matrix {
             return mas.end();
         }
 
-        typedef typename vector<T>::const_iterator IterC;
+        typedef typename vector<T>::const_iterator IterC; //matrix const_iterator
         IterC begin() const {
             return mas.begin();
         }
@@ -140,7 +140,7 @@ class Matrix {
             return mas.end();
         }
 
-        friend std::ostream& operator<< (std::ostream &out, const Matrix<T> &a) {
+        friend std::ostream& operator<< (std::ostream &out, const Matrix<T> &a) { // <<
             auto p = a.size();
             for (auto i = 0; i < p.first; ++i) {
                 for (auto j = 0; j < p.second; ++j) {
