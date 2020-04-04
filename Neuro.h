@@ -108,13 +108,17 @@ public:
                 std::vector<T> nexterr;
                 Matrix<T> m(error, error.size(), 1);
                 nexterr = (weights[i].transposed * m).get_vec();
-                //numpy.dot ((output_errors * final_outputs * (1.0 - final_outputs)), numpy.transpose (hidden_outputs))
-                Matrix<T> next_layer(rez[t - 1], rez[t - 1].size(), 1);
-                Matrix<T> layer(rez[t], 1, rez[t].size());
-                auto rez = ( * ());
+                vector<T> vec;
+                for (auto j = 0; j < error.size(); ++j) {
+                    vec.push_back(error[j] * rez[t][j] * (1-rez[t][j]));
+                }
+                Matrix<T> f(vec, vec.size(), 1);
+                Matrix<T> s(rez[t], 1, rez[t].size());
+                auto rez = f * s;
                 rez *= learn_coef;
-                weights[i] = 
+                weights[i] += rez;
                 error = nexterr;
+                --t;
             }
         }
     }
