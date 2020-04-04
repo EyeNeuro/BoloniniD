@@ -80,6 +80,10 @@ class Matrix {
             mas = g;
         }
 
+        vector<T> get_vec() const {
+            return mas;
+        }
+
         Matrix<T> transposed() const { //returns a transposed matrix
             Matrix chn = *this;
             vector<T> g;
@@ -151,3 +155,6 @@ class Matrix {
             return out;
         }
 };
+
+template <typename T>
+Matrix<T>
